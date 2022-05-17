@@ -6,7 +6,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.viewsets import ModelViewSet
 
 
-from logistic.models import Product, Stock, StockProduct
+from logistic.models import Product, Stock
 from logistic.serializers import ProductSerializer, StockSerializer
 
 
@@ -15,7 +15,8 @@ class ProductFilter(FilterSet):
 
     def search_filter(self, queryset, name, value):
         return queryset.filter(Q(products__title__icontains=value) |
-                               Q(products__description__icontains=value)
+                               Q(products__description__icontains=value) |
+                               Q(products__id__icontains=value)
                                ).distinct()
 
     class Meta:
